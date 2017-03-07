@@ -1,0 +1,12 @@
+{
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "css/style.css",
+      "js/jquery-1.11.0.js",
+      "js/map.js"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}

@@ -1,0 +1,22 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+#allmap{
+  width:1000px;
+  height:1000px;
+}
+#qr_code{
+  width:800px;
+  height:800px;
+}
+#hello{
+
+}
+#send_code{
+	margin-top:1% ;
+}
