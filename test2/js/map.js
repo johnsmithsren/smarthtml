@@ -102,52 +102,60 @@
 //});
 
 $(document).ready(function() {
-	var barChartData = {
-			labels : ["January","February","March","April","May","June","July"],
-			datasets : [
-				{
-					fillColor : "rgba(220,220,220,0.5)",
-					strokeColor : "rgba(220,220,220,0.8)",
-					highlightFill: "rgba(220,220,220,0.75)",
-					highlightStroke: "rgba(220,220,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-				},
-				{
-					fillColor : "rgba(48, 164, 255, 0.2)",
-					strokeColor : "rgba(48, 164, 255, 0.8)",
-					highlightFill : "rgba(48, 164, 255, 0.75)",
-					highlightStroke : "rgba(48, 164, 255, 1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-				}
-			]
-	
-		}
-	var chart2 = document.getElementById("bar-chart").getContext("2d");
-	window.myBar = new Chart(chart2).Bar(barChartData, {
-		responsive : true
-	});
-	
-	
-	
-	
-	
-	
-	var flag=false;
-	$("#map_hideshow").click(function(){
-		if(!flag){
-			$('#map_show_hide').css("display","block");
-			flag=true;
-		}else{
-			$('#map_show_hide').css("display","none");
-			flag=false;
-		}
-			
-	})
-//	$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
-//	$('#easypiechart-red').data('easyPieChart').update(50)
+	var date = new Date();
+	var today = date.getDate();
+	var month = date.getMonth();
+//	$.ajax({
+//		url: "http://demaciaspower.cn/get_stepdata",
+//		data: {
+//
+//		},
+//		type: "GET",
+//		dataType: "json",
+//		success: function(data) {
+//			if(data) {
+//				if(data.data.length) {
+//					var barChartData = {
+//						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
+//						datasets: [{
+//								fillColor: "rgba(0,255,225,0.5)",
+//								strokeColor: "rgba(0,255,225,0.8)",
+//								highlightFill: "rgba(0,255,225,0.75)",
+//								highlightStroke: "rgba(0,255,225,1)",
+//								data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+//							}
+//
+//						]
+//
+//					}
+//					var chart2 = document.getElementById("bar-chart").getContext("2d");
+//					window.myBar = new Chart(chart2).Bar(barChartData, {
+//						responsive: true
+//					});
+//				} else {
+//					console.log('no data');
+//				}
+//
+//			}
+//		}
+//	});
+
+	var flag = false;
+	$("#map_hideshow").click(function() {
+			if(!flag) {
+				$('#map_show_hide').css("display", "block");
+				flag = true;
+			} else {
+				$('#map_show_hide').css("display", "none");
+				flag = false;
+			}
+
+		})
+		//	$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
+		//	$('#easypiechart-red').data('easyPieChart').update(50)
 	$.ajax({
 		url: "http://demaciaspower.cn/get_userInfo",
-//		      url: "http://localhost:3000/get_userInfo",
+		//		      url: "http://localhost:3000/get_userInfo",
 		data: {
 
 		},
@@ -155,14 +163,14 @@ $(document).ready(function() {
 		dataType: "json",
 		success: function(data) {
 			if(data) {
-				var temp=localStorage.getItem("name");
-				if (temp.length){
+				var temp = localStorage.getItem("name");
+				if(temp.length) {
 					$('#user_name').text(temp);
-				}else{
+				} else {
 					var temp = data.name;
 					$('#user_name').text(temp);
 				}
-				
+
 			} else {
 				console.log('ajax failed!')
 			}
@@ -173,7 +181,7 @@ $(document).ready(function() {
 		var User_name = $('#user_name').val();
 		var data1 = $.ajax({
 			url: "http://demaciaspower.cn/dashboard/logout",
-//			      url: "http://localhost:3000/dashboard/logout",
+			//			      url: "http://localhost:3000/dashboard/logout",
 			data: {
 				user_name: User_name
 			},
@@ -208,12 +216,12 @@ function datashow() {
 		dataType: "json",
 		success: function(data) {
 			if(data) {
-				if(data.data.length){
+				if(data.data.length) {
 					mapshow(data.data);
-				}else{
+				} else {
 					console.log('no data');
 				}
-				
+
 			}
 		}
 	});
@@ -257,22 +265,22 @@ function mapshow(temp_data) {
 	var map = new BMap.Map("allmap");
 	map.centerAndZoom(new BMap.Point(temp_data[0].longitude, temp_data[0].latitude), 18);
 	map.enableScrollWheelZoom(true);
-	map.addControl(new BMap.NavigationControl());  
-	map.addControl(new BMap.ScaleControl());  
+	map.addControl(new BMap.NavigationControl());
+	map.addControl(new BMap.ScaleControl());
 	map.addControl(new BMap.OverviewMapControl());
-	var map_data=[];
-	if (temp_data.length){
-		
+	var map_data = [];
+	if(temp_data.length) {
+
 		var time = temp_data[0].create_time - temp_data[1].create_time
-		var time2=(temp_data[0].create_time - temp_data[temp_data.length-1].create_time)/60
+		var time2 = (temp_data[0].create_time - temp_data[temp_data.length - 1].create_time) / 60
 		for(var i = 0; i < temp_data.length; i++) {
-			var point1=new BMap.Point(temp_data[0].longitude, temp_data[0].latitude);
+			var point1 = new BMap.Point(temp_data[0].longitude, temp_data[0].latitude);
 			map_data.push(point1);
 			var Dis = Distance(temp_data[0].longitude, temp_data[0].latitude, temp_data[i].longitude, temp_data[i].latitude);
 			var Calorie = calorie(temp_data[i].Weight, Dis);
-			var Speed =Dis*1000/time;
+			var Speed = Dis * 1000 / time;
 			$('.destination').text(Dis.toFixed(2));
-			$('.Calorie').text((Calorie*1000).toFixed(2));
+			$('.Calorie').text((Calorie * 1000).toFixed(2));
 			$('.Speed').text(Speed.toFixed(2));
 		}
 		$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
@@ -282,9 +290,13 @@ function mapshow(temp_data) {
 		$('#teal').text(time2.toFixed(2))
 		$('#easypiechart-teal').data('easyPieChart').update(time2)
 		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2))
-		var polyline =  new BMap.Polyline([new BMap.Point(121.5578,31.244),new BMap.Point(121.55790,31.2445666)], {strokeColor: "blue", strokeWeight: 10, strokeOpacity: 0.5});
+		var polyline = new BMap.Polyline([new BMap.Point(121.5578, 31.244), new BMap.Point(121.55790, 31.2445666)], {
+			strokeColor: "blue",
+			strokeWeight: 10,
+			strokeOpacity: 0.5
+		});
 		map.addOverlay(polyline);
-	}else{
+	} else {
 		console.log('no data');
 	}
 }
