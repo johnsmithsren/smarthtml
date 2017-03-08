@@ -102,6 +102,49 @@
 //});
 
 $(document).ready(function() {
+	var barChartData = {
+			labels : ["January","February","March","April","May","June","July"],
+			datasets : [
+				{
+					fillColor : "rgba(220,220,220,0.5)",
+					strokeColor : "rgba(220,220,220,0.8)",
+					highlightFill: "rgba(220,220,220,0.75)",
+					highlightStroke: "rgba(220,220,220,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+				},
+				{
+					fillColor : "rgba(48, 164, 255, 0.2)",
+					strokeColor : "rgba(48, 164, 255, 0.8)",
+					highlightFill : "rgba(48, 164, 255, 0.75)",
+					highlightStroke : "rgba(48, 164, 255, 1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+				}
+			]
+	
+		}
+	var chart2 = document.getElementById("bar-chart").getContext("2d");
+	window.myBar = new Chart(chart2).Bar(barChartData, {
+		responsive : true
+	});
+	
+	
+	
+	
+	
+	
+	var flag=false;
+	$("#map_hideshow").click(function(){
+		if(!flag){
+			$('#map_show_hide').css("display","block");
+			flag=true;
+		}else{
+			$('#map_show_hide').css("display","none");
+			flag=false;
+		}
+			
+	})
+//	$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
+//	$('#easypiechart-red').data('easyPieChart').update(50)
 	$.ajax({
 		url: "http://demaciaspower.cn/get_userInfo",
 //		      url: "http://localhost:3000/get_userInfo",
@@ -196,7 +239,7 @@ function HaverSin(theta) {
 }
 
 function Distance(lat1, lon1, lat2, lon2) {
-	var EARTH_RADIUS = 6371.0;
+	var EARTH_RADIUS = 6378.137;
 	lat1 = lat1 * Math.PI / 180;
 	lon1 = lon1 * Math.PI / 180;
 	lat2 = lat2 * Math.PI / 180;
@@ -221,17 +264,24 @@ function mapshow(temp_data) {
 	if (temp_data.length){
 		
 		var time = temp_data[0].create_time - temp_data[1].create_time
+		var time2=(temp_data[0].create_time - temp_data[temp_data.length-1].create_time)/60
 		for(var i = 0; i < temp_data.length; i++) {
 			var point1=new BMap.Point(temp_data[0].longitude, temp_data[0].latitude);
 			map_data.push(point1);
 			var Dis = Distance(temp_data[0].longitude, temp_data[0].latitude, temp_data[i].longitude, temp_data[i].latitude);
 			var Calorie = calorie(temp_data[i].Weight, Dis);
 			var Speed =Dis*1000/time;
-			$('.destination').text(Dis*1000*1000);
-			$('.Calorie').text(Calorie*1000);
-			$('.Speed').text(Speed);
+			$('.destination').text(Dis.toFixed(2));
+			$('.Calorie').text((Calorie*1000).toFixed(2));
+			$('.Speed').text(Speed.toFixed(2));
 		}
-		console.log(map_data);
+		$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
+		$('#easypiechart-red').data('easyPieChart').update(Speed.toFixed(2))
+		$('#red').text(Speed.toFixed(2))
+		$('#blue').text(Dis.toFixed(2))
+		$('#teal').text(time2.toFixed(2))
+		$('#easypiechart-teal').data('easyPieChart').update(time2)
+		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2))
 		var polyline =  new BMap.Polyline([new BMap.Point(121.5578,31.244),new BMap.Point(121.55790,31.2445666)], {strokeColor: "blue", strokeWeight: 10, strokeOpacity: 0.5});
 		map.addOverlay(polyline);
 	}else{
