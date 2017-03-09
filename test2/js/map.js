@@ -157,7 +157,7 @@ $(document).ready(function() {
 		url: "http://demaciaspower.cn/get_userInfo",
 		//		      url: "http://localhost:3000/get_userInfo",
 		data: {
-
+			name:"renjm"
 		},
 		type: "GET",
 		dataType: "json",
@@ -181,18 +181,14 @@ $(document).ready(function() {
 		var User_name = $('#user_name').val();
 		var data1 = $.ajax({
 			url: "http://demaciaspower.cn/dashboard/logout",
-			//			      url: "http://localhost:3000/dashboard/logout",
 			data: {
 				user_name: User_name
 			},
 			type: "POST",
 			dataType: "json",
 			success: function(data) {
-				if(data) {
-					window.location.href = 'login.html'
-				} else {
-					console.log('ajax failed!')
-				}
+					localStorage.removeItem("name");
+					window.location.href ="login.html";
 			}
 		});
 
@@ -210,7 +206,7 @@ function datashow() {
 	$.ajax({
 		url: "http://demaciaspower.cn/select_map_info",
 		data: {
-
+			shoe_code:"CE56A2F6ACD8"
 		},
 		type: "GET",
 		dataType: "json",

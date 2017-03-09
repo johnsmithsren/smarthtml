@@ -12,16 +12,20 @@ $(document).ready(function() {
         var _username=$("#username").val();
         var _tel=$("#tel").val();
         var _email=$("#email").val();
+        var _weight=$("#weight").val();
+        var _shoecode=$("#shoe_code").val();
         if (_email.length){
             $.ajax({
-//              url: "http://demaciaspower.cn/user/login/sign_up",
-                url: "http://localhost:3000/user/login/sign_up",
+                url: "http://demaciaspower.cn/user/login/sign_up",
+//              url: "http://localhost:3000/user/login/sign_up",
                 
                 data: {
                     pwd:_password,
                     name:_username,
                     tel:_tel,
-                    account:_email
+                    account:_email,
+                    weight:_weight,
+                    shoe_code:_shoecode
                 },
                 type: "POST",
                 dataType : "json",

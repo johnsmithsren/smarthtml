@@ -4,7 +4,7 @@
 
 
 $('#signin').click(function() {
-	
+	$(".error").remove();
     if ($("#email").val() == "") {
         alert("邮箱不能为空");
         return false;
@@ -19,7 +19,7 @@ $('#signin').click(function() {
         var _code=$("#identify_code").val();
         $.ajax({
 //          url: "http://demaciaspower.cn/user/login/user_verify",
-			url: "http://localhost:3000/user/login/user_verify",
+			url: "http://demaciaspower.cn/user/login/user_verify",
             data: {
                 pwd:_password,
                 name:_username,
@@ -41,9 +41,6 @@ $('#signin').click(function() {
                     {
                         var temp = '<div class="alert alert-success"> <a class="close" data-dismiss="alert">×</a> <strong>Success!</strong> You have successfully done it. </div> '
 						window.location.href='dashboard.html'
-//                      window.opener.location="dashboard.html";
-//                      window.opener=null;
-//                      window.close();
                     }
                 }
             },
@@ -59,7 +56,7 @@ $('#signin').click(function() {
 
 $('#send_code').click(function() {
 		$.ajax({
-            url: "http://localhost:3000/user/send_code",
+            url: "http://demaciaspower.cn/user/send_code",
             data: {
                 
             },
