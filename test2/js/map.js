@@ -105,40 +105,40 @@ $(document).ready(function() {
 	var date = new Date();
 	var today = date.getDate();
 	var month = date.getMonth();
-//	$.ajax({
-//		url: "http://demaciaspower.cn/get_stepdata",
-//		data: {
-//
-//		},
-//		type: "GET",
-//		dataType: "json",
-//		success: function(data) {
-//			if(data) {
-//				if(data.data.length) {
-//					var barChartData = {
-//						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
-//						datasets: [{
-//								fillColor: "rgba(0,255,225,0.5)",
-//								strokeColor: "rgba(0,255,225,0.8)",
-//								highlightFill: "rgba(0,255,225,0.75)",
-//								highlightStroke: "rgba(0,255,225,1)",
-//								data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-//							}
-//
-//						]
-//
-//					}
-//					var chart2 = document.getElementById("bar-chart").getContext("2d");
-//					window.myBar = new Chart(chart2).Bar(barChartData, {
-//						responsive: true
-//					});
-//				} else {
-//					console.log('no data');
-//				}
-//
-//			}
-//		}
-//	});
+	$.ajax({
+		url: "http://demaciaspower.cn/get_stepdata",
+		data: {
+
+		},
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			if(data) {
+				if(data.data.length) {
+					var barChartData = {
+						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
+						datasets: [{
+								fillColor: "rgba(0,255,225,0.5)",
+								strokeColor: "rgba(0,255,225,0.8)",
+								highlightFill: "rgba(0,255,225,0.75)",
+								highlightStroke: "rgba(0,255,225,1)",
+								data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+							}
+
+						]
+
+					}
+					var chart2 = document.getElementById("bar-chart").getContext("2d");
+					window.myBar = new Chart(chart2).Bar(barChartData, {
+						responsive: true
+					});
+				} else {
+					console.log('no data');
+				}
+
+			}
+		}
+	});
 
 	var flag = false;
 	$("#map_hideshow").click(function() {
@@ -164,19 +164,19 @@ $(document).ready(function() {
 		success: function(data) {
 			if(data) {
 				var temp = localStorage.getItem("name");
-				if(temp.length) {
+				console.log(temp,data.data)
+				if(temp) {
 					$('#user_name').text(temp);
 				} else {
-					var temp = data.name;
+					localStorage.setItem("name",data.data[0].name);
+					var temp = data.data[0].name;
 					$('#user_name').text(temp);
 				}
-
 			} else {
 				console.log('ajax failed!')
 			}
 		}
 	});
-
 	$('#user_logout').click(function() {
 		var User_name = $('#user_name').val();
 		var data1 = $.ajax({
