@@ -108,13 +108,14 @@ $(document).ready(function() {
 	$.ajax({
 		url: "http://demaciaspower.cn/get_stepdata",
 		data: {
-
+			name:'renjm'
 		},
 		type: "GET",
 		dataType: "json",
 		success: function(data) {
 			if(data) {
-				if(data.data.length) {
+				console.log(data)
+				if(data.data) {
 					var barChartData = {
 						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
 						datasets: [{

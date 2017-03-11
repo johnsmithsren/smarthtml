@@ -23,9 +23,7 @@
         "Audio": {
             "description": "访问麦克风"
         },
-        "Messaging":{
-        	"description": "短彩邮件插件"
-        },
+        
         "Cache": {
             "description": "管理应用缓存"
         },
