@@ -1,5 +1,29 @@
 $(document).ready(function() {
 	$.ajax({
+		url: "http://demaciaspower.cn/get_userInfo",
+		//		      url: "http://localhost:3000/get_userInfo",
+		data: {
+			name:"renjm"
+		},
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			if(data) {
+				var temp = localStorage.getItem("name");
+				console.log(temp,data.data)
+				if(temp) {
+					$('#user_name').text(temp);
+				} else {
+					localStorage.setItem("name",data.data[0].name);
+					var temp = data.data[0].name;
+					$('#user_name').text(temp);
+				}
+			} else {
+				console.log('ajax failed!')
+			}
+		}
+	});
+	$.ajax({
 		url: "http://demaciaspower.cn/get_userprofile",
 		data: {
 			name:"renjm"
