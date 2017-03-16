@@ -173,9 +173,7 @@ $(document).ready(function() {
 					var temp = data.data[0].name;
 					$('#user_name').text(temp);
 				}
-			} else {
-				console.log('ajax failed!')
-			}
+			} else {console.log('ajax failed!')}
 		}
 	});
 	$('#user_logout').click(function() {
