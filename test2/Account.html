@@ -42,16 +42,24 @@
 				</h4>
 					</div>
 					<div class="modal-body">
-					
+					<div class="panel panel-default">
+					<div class="panel-heading">每日步数</div>
+					<div class="panel-body">
+						<div class="canvas-wrapper">
+							<canvas class="main-chart" id="bar-chart" height="200" width="300"></canvas>
+						</div>
+					</div>
+				</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						<button type="button" id='show_map_data' class="btn btn-primary">显示</button>
 				</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div  class="modal fade" id="myemail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="myemail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -63,15 +71,14 @@
 					<div class="modal-body">
 						标题
 						<br/>
-						<input type="text" placeholder="邮件标题" id='title_text' class="input-xlarge"><br/>
-						内容
+						<input type="text" placeholder="邮件标题" id='title_text' class="input-xlarge"><br/> 内容
 						<div class="textarea">
 							<textarea type="" id='textarea' class="content_text"></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						
+
 						<button type="button" id='email_send' class="btn btn-primary">发送</button>
 					</div>
 				</div>
@@ -123,6 +130,7 @@
 					<li class="active">Account</li>
 				</ol>
 			</div>
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-default chat">
@@ -148,6 +156,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="col-md-5">
 
 				</div>

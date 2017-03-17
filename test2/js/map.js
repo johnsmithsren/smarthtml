@@ -124,10 +124,7 @@ $(document).ready(function() {
 								highlightFill: "rgba(0,255,225,0.75)",
 								highlightStroke: "rgba(0,255,225,1)",
 								data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-							}
-
-						]
-
+						}]
 					}
 					var chart2 = document.getElementById("bar-chart").getContext("2d");
 					window.myBar = new Chart(chart2).Bar(barChartData, {
@@ -144,9 +141,13 @@ $(document).ready(function() {
 	var flag = false;
 	$("#map_hideshow").click(function() {
 			if(!flag) {
+				$("#datashow").css("display","none");
+				$("#stepshow").css("display","none");
 				$('#map_show_hide').css("display", "block");
 				flag = true;
 			} else {
+				$("#datashow").css("display","block");
+				$("#stepshow").css("display","block");
 				$('#map_show_hide').css("display", "none");
 				flag = false;
 			}
