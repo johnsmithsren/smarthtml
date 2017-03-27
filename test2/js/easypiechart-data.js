@@ -25,6 +25,12 @@ $(function() {
        barColor: '#30a5ff'
    });
 });
+$(function() {
+   $('#easypiechart-grey').easyPieChart({
+       scaleColor: false,
+       barColor:"#989898"
+   });
+});
 
 //$('#calendar').datepicker({
 //	});

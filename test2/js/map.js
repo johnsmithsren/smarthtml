@@ -105,49 +105,50 @@ $(document).ready(function() {
 	var date = new Date();
 	var today = date.getDate();
 	var month = date.getMonth();
-	$.ajax({
-		url: "http://demaciaspower.cn/get_stepdata",
-		data: {
-			name:'renjm'
-		},
-		type: "GET",
-		dataType: "json",
-		success: function(data) {
-			if(data) {
-				console.log(data)
-				if(data.data) {
-					var barChartData = {
-						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
-						datasets: [{
-								fillColor: "rgba(0,255,225,0.5)",
-								strokeColor: "rgba(0,255,225,0.8)",
-								highlightFill: "rgba(0,255,225,0.75)",
-								highlightStroke: "rgba(0,255,225,1)",
-								data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-						}]
-					}
-					var chart2 = document.getElementById("bar-chart").getContext("2d");
-					window.myBar = new Chart(chart2).Bar(barChartData, {
-						responsive: true
-					});
-				} else {
-					console.log('no data');
-				}
-
-			}
-		}
-	});
+	var _name = localStorage.getItem("name");
+//	$.ajax({
+//		url: "http://demaciaspower.cn/get_stepdata",
+//		data: {
+//			name: _name
+//		},
+//		type: "GET",
+//		dataType: "json",
+//		success: function(data) {
+//			if(data) {
+//				console.log(data)
+//				if(data.data) {
+//					var barChartData = {
+//						labels: [month + "月" + (today - 5) + "日", month + "月" + (today - 4) + "日", month + "月" + (today - 3) + "日", month + "月" + (today - 2) + "日", month + "月" + (today - 1) + "日", month + "月" + today + "日"],
+//						datasets: [{
+//							fillColor: "rgba(0,255,225,0.5)",
+//							strokeColor: "rgba(0,255,225,0.8)",
+//							highlightFill: "rgba(0,255,225,0.75)",
+//							highlightStroke: "rgba(0,255,225,1)",
+//							data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+//						}]
+//					}
+//					var chart2 = document.getElementById("bar-chart").getContext("2d");
+//					window.myBar = new Chart(chart2).Bar(barChartData, {
+//						responsive: true
+//					});
+//				} else {
+//					console.log('no data');
+//				}
+//
+//			}
+//		}
+//	});
 
 	var flag = false;
 	$("#map_hideshow").click(function() {
 			if(!flag) {
-				$("#datashow").css("display","none");
-				$("#stepshow").css("display","none");
+				$("#datashow").css("display", "none");
+				$("#stepshow").css("display", "none");
 				$('#map_show_hide').css("display", "block");
 				flag = true;
 			} else {
-				$("#datashow").css("display","block");
-				$("#stepshow").css("display","block");
+				$("#datashow").css("display", "block");
+				$("#stepshow").css("display", "block");
 				$('#map_show_hide').css("display", "none");
 				flag = false;
 			}
@@ -155,26 +156,30 @@ $(document).ready(function() {
 		})
 		//	$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
 		//	$('#easypiechart-red').data('easyPieChart').update(50)
+	var temp_name =localStorage.getItem("name");
 	$.ajax({
+		
 		url: "http://demaciaspower.cn/get_userInfo",
 		//		      url: "http://localhost:3000/get_userInfo",
 		data: {
-			name:"renjm"
+			name: temp_name
 		},
 		type: "GET",
 		dataType: "json",
 		success: function(data) {
 			if(data) {
 				var temp = localStorage.getItem("name");
-				console.log(temp,data.data)
+				console.log(temp, data.data)
 				if(temp) {
 					$('#user_name').text(temp);
 				} else {
-					localStorage.setItem("name",data.data[0].name);
+					localStorage.setItem("name", data.data[0].name);
 					var temp = data.data[0].name;
 					$('#user_name').text(temp);
 				}
-			} else {console.log('ajax failed!')}
+			} else {
+				console.log('ajax failed!')
+			}
 		}
 	});
 	$('#user_logout').click(function() {
@@ -187,8 +192,9 @@ $(document).ready(function() {
 			type: "POST",
 			dataType: "json",
 			success: function(data) {
-					localStorage.removeItem("name");
-					window.location.href ="login.html";
+				localStorage.removeItem("name");
+				localStorage.clear();
+				window.location.href = "login.html";
 			}
 		});
 
@@ -200,22 +206,48 @@ $(document).ready(function() {
 //map.addControl(new BMap.NavigationControl());  
 //map.addControl(new BMap.ScaleControl());  
 //map.addControl(new BMap.OverviewMapControl());
+var flag;
+function show_mapFlag(){
+	flag=setInterval(datashow,15000);
+}
+function stop_mapFlag(){
+	clearInterval(flag);
+}
+var start_time;
+function select_time(){
+	
+}
 
 function datashow() {
 	var temp_data;
+	var _shoe_code = localStorage.getItem("shoe_code");
+	var _account=localStorage.getItem("name");
 	$.ajax({
 		url: "http://demaciaspower.cn/select_map_info",
 		data: {
-			shoe_code:"CE56A2F6ACD8"
+			shoe_code:_shoe_code,
+			account:_account
 		},
 		type: "GET",
 		dataType: "json",
 		success: function(data) {
 			if(data) {
 				if(data.data.length) {
-					mapshow(data.data);
+					var pointA = [];
+					pointA.push(new BMap.Point(data.data[0].latitude.toFixed(10), data.data[0].longitude.toFixed(10)));
+					tranCallback = function(result) {
+						mapshow(result.points[0], data.data);
+					}
+					var conv = new BMap.Convertor();
+					conv.translate(pointA, 1, 5, tranCallback);
 				} else {
-					console.log('no data');
+					var temp = '<div class="alert alert-warning">' +
+						'<a href="#" class="close" data-dismiss="alert">' +
+						'&times;' +
+						'</a>' +
+						'<strong>警告！</strong>地图数据无法获取。' +
+						'</div>'
+					$("._error").append(temp);
 				}
 
 			}
@@ -243,6 +275,7 @@ function HaverSin(theta) {
 }
 
 function Distance(lat1, lon1, lat2, lon2) {
+	
 	var EARTH_RADIUS = 6378.137;
 	lat1 = lat1 * Math.PI / 180;
 	lon1 = lon1 * Math.PI / 180;
@@ -255,43 +288,69 @@ function Distance(lat1, lon1, lat2, lon2) {
 	return distance;
 }
 
-//setInterval(datashow,12000);
-//clearInterval();
-function mapshow(temp_data) {
+//setInterval(datashow,45000);
+clearInterval();
+function mapshow(first_point, temp_data) {
 	var map = new BMap.Map("allmap");
-	map.centerAndZoom(new BMap.Point(temp_data[0].longitude, temp_data[0].latitude), 18);
 	map.enableScrollWheelZoom(true);
+	map.centerAndZoom(first_point, 18);
 	map.addControl(new BMap.NavigationControl());
 	map.addControl(new BMap.ScaleControl());
 	map.addControl(new BMap.OverviewMapControl());
 	var map_data = [];
+	var Dis = 0;
+	var time = temp_data[1].create_time - temp_data[0].create_time
+	var temp_DisforSpeed = Distance(temp_data[0].longitude, temp_data[0].latitude, temp_data[1].longitude, temp_data[1].latitude);
+	var Speed = temp_DisforSpeed * 1000 / time;
+	$('.Speed').text(Speed.toFixed(2));
 	if(temp_data.length) {
 
-		var time = temp_data[0].create_time - temp_data[1].create_time
-		var time2 = (temp_data[0].create_time - temp_data[temp_data.length - 1].create_time) / 60
-		for(var i = 0; i < temp_data.length; i++) {
-			var point1 = new BMap.Point(temp_data[0].longitude, temp_data[0].latitude);
+		var time2 = (temp_data[temp_data.length - 1].create_time - temp_data[0].create_time) / 60
+		for(var i = 0; i < temp_data.length - 1; i++) {
+			var point1 = new BMap.Point((temp_data[i].latitude).toFixed(10), (temp_data[i].longitude - 0.000048888).toFixed(10));
+			//			var point1 = new BMap.Point((temp_data[i].latitude).toFixed(10), (temp_data[i].longitude).toFixed(10));
 			map_data.push(point1);
-			var Dis = Distance(temp_data[0].longitude, temp_data[0].latitude, temp_data[i].longitude, temp_data[i].latitude);
-			var Calorie = calorie(temp_data[i].Weight, Dis);
-			var Speed = Dis * 1000 / time;
-			$('.destination').text(Dis.toFixed(2));
-			$('.Calorie').text((Calorie * 1000).toFixed(2));
-			$('.Speed').text(Speed.toFixed(2));
+			var temp_Dis = Distance(temp_data[i].longitude, temp_data[i].latitude, temp_data[i + 1].longitude, temp_data[i + 1].latitude);
+			Dis = Dis + temp_Dis;
+			
+			var Calorie = calorie(temp_data[0].weight, Dis);
+			
+//			$('.destination').text(Dis.toFixed(2));
+//			$('.Calorie').text((Calorie * 1000).toFixed(2));
+
 		}
 		$('#easypiechart-red').data('easyPieChart').options.barColor = '#0033CC';
-		$('#easypiechart-red').data('easyPieChart').update(Speed.toFixed(2))
-		$('#red').text(Speed.toFixed(2))
-		$('#blue').text(Dis.toFixed(2))
-		$('#teal').text(time2.toFixed(2))
-		$('#easypiechart-teal').data('easyPieChart').update(time2)
-		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2))
-		var polyline = new BMap.Polyline([new BMap.Point(121.5578, 31.244), new BMap.Point(121.55790, 31.2445666)], {
-			strokeColor: "blue",
-			strokeWeight: 10,
-			strokeOpacity: 0.5
-		});
-		map.addOverlay(polyline);
+		$('#easypiechart-red').data('easyPieChart').update(Speed.toFixed(2));
+		$('#red').text(Speed.toFixed(2));
+		$('#blue').text(Dis.toFixed(2));
+		$('#teal').text(time2.toFixed(2));
+		$('#grey').text((Calorie*250).toFixed(2));
+		$('#easypiechart-teal').data('easyPieChart').update(time2);
+		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2));
+		$('#easypiechart-grey').data('easyPieChart').update((Calorie*250).toFixed(2));
+		translateCallback = function(data) {
+			if(data.status === 0) {
+				var polyline = new BMap.Polyline(data.points, {
+					strokeColor: "red",
+					strokeWeight: 3,
+					strokeOpacity: 1
+				});
+				map.addOverlay(polyline);
+			}
+		}
+		var convertor = new BMap.Convertor();
+		var temp = [];
+		var j = 0;
+		for(var a = 0; a < map_data.length - 2; a++) {
+			temp[j] = map_data[a];
+			j++;
+			if(j % 8 == 0) {
+				temp[j] = map_data[a + 1];
+				convertor.translate(temp, 1, 5, translateCallback);
+				j = 0;
+				temp = [];
+			}
+		}
 	} else {
 		console.log('no data');
 	}

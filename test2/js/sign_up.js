@@ -17,8 +17,6 @@ $(document).ready(function() {
         if (_email.length){
             $.ajax({
                 url: "http://demaciaspower.cn/user/login/sign_up",
-//              url: "http://localhost:3000/user/login/sign_up",
-                
                 data: {
                     pwd:_password,
                     name:_username,
@@ -32,13 +30,8 @@ $(document).ready(function() {
                 success:function(data){
                     if(data){
                         var data3=data;
-                        localStorage.setItem("name",_email);
-                        window.location.href='http://localhost:3000/login.html';
-//                        $("#sign_in").val("Success");
-//                        alert("用户或密码错误！");
-//                      window.opener.location="login.html";
-//                      window.opener=null;
-//                      window.close();
+                        localStorage.setItem("name",_username);
+                        window.location.href='login.html';
                     }
                 }
             });

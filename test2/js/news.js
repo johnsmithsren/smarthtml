@@ -1,9 +1,10 @@
 $(document).ready(function(){
+	var _name=localStorage.getItem("name");
 	$.ajax({
 		url: "http://demaciaspower.cn/get_userInfo",
 		//		      url: "http://localhost:3000/get_userInfo",
 		data: {
-			name:"renjm"
+			name:_name
 		},
 		type: "GET",
 		dataType: "json",
