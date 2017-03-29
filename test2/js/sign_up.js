@@ -28,7 +28,15 @@ $(document).ready(function() {
                 type: "POST",
                 dataType : "json",
                 success:function(data){
-                    if(data){
+                    if(data.err){
+                    		var temp = '<div class="alert alert-warning">' +
+						'<a href="#" class="close" data-dismiss="alert">' +
+						'&times;' +
+						'</a>' +
+						'<strong>警告！</strong>' +data.err+
+						'</div>'
+						$("._error").append(temp);
+                    }else{
                         var data3=data;
                         localStorage.setItem("name",_username);
                         window.location.href='login.html';

@@ -20,6 +20,7 @@ $('#signin').click(function() {
 			'<strong>警告！</strong>密码不能为空。' +
 			'</div>'
 		$("._error").append(temp);
+		setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},3000);
 		return;
 	} else if($("#identify_code").val() == "") {
 		var temp = '<div class="alert alert-warning">' +
@@ -29,6 +30,7 @@ $('#signin').click(function() {
 			'<strong>警告！</strong>验证码不能为空。' +
 			'</div>'
 		$("._error").append(temp);
+		setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},3000);
 		return;
 	} else {
 		var _password = $("#password").val();
@@ -57,8 +59,9 @@ $('#signin').click(function() {
 							'<strong>警告！</strong>'+msg+
 							'</div>'
 						$("._error").append(temp);
-						$("#password").val('');
-						$("#username").val('');
+						setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},3000);
+//						$("#password").val('');
+//						$("#username").val('');
 					} else {
 						console.log(data_back);
 						localStorage.setItem("name",_username);
@@ -106,6 +109,7 @@ $('#send_code').click(function() {
 			'<strong>警告！</strong>请填写正确的手机号.' +
 			'</div>'
 		$("._error").append(temp);
+		setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},3000);
 	}
 
 });

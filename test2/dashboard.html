@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>SMART - SHOE</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/datepicker3.css" rel="stylesheet">
 		<link href="css/styles.css" rel="stylesheet">
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=tSq8bTr70G62ozKhlLp2atbCG51UDZav"></script>
@@ -15,9 +14,7 @@
 		<script src="js/chart.min.js"></script>
 		<script src="js/chart-data.js"></script>
 		<script src="js/bootstrap-datetimepicker.js"></script>
-		<script src="js/bootstrap-datetimepicker.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css"/>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" />
 		<script>
 			! function($) {
 				$(document).on("click", "ul.nav li.parent > a > span.icon", function() {
@@ -56,9 +53,6 @@
 								<li>
 									<a href="share.html?name=renjm"><span class="glyphicon glyphicon-cog"></span> 分享</a>
 								</li>
-								<!--<li>
-									<a id='map_hideshow'><span class="glyphicon glyphicon-plane"></span> Map</a>
-								</li>-->
 								<li>
 									<a id='user_logout'><span class="glyphicon glyphicon-log-out"></span> 登出</a>
 								</li>
@@ -98,17 +92,20 @@
 				</ol>
 			</div>
 			<div class="row">
-
-				<div class="col-md-8"></div>
-				<div class="col-md-4">
-					<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">即时更新</button>
-					<button id="stop_update" onclick="stop_mapFlag()" class="btn btn-primary">停止</button>
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">实时更新</button>
 					<button id="choose_date" class="btn btn-primary">日期选择</button>
-					<div class="form-group">
-						<label>选择日期+时间：</label>
-						<!--指定 date标记-->
+					<button id="show_data" onclick="btnshow()" class="btn btn-primary">显示地图</button>
+					<div id="datepick1" style="display: none; " class="form-group">
 						<div class='input-group date' id='datetimepicker2'>
-							<input type='text' class="form-control" />
+							<input type='text' id="datestart" class="form-control" />
+							<span class="input-group-addon">  
+                    			<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+						<div class='input-group date' id='datetimepicker1'>
+							<input type='text' id="dateend" class="form-control" />
 							<span class="input-group-addon">  
                     			<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -161,39 +158,47 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="row" id="stepshow">-->
-			<!--<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">每日步数</div>
-					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="bar-chart" height="200" width="600"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>-->
-			<!--</div>-->
-
 		</div>
 
 		<!--/.main-->
+		
+		
+		
 
 	</body>
 	<script type="text/javascript">
-		$('#datetimepicker2').datetimepicker({  
-        		format: 'YYYY-MM-DD hh:mm',  
-        		locale: moment.locale('zh-cn')  
-    });  
-		// 监听“返回”按钮事件
-		//function addEventTest() {
-		//	plus.key.addEventListener("backbutton",function(){
-		//		alert( "BackButton Key pressed!" );
-		//	});
-		//}
+	
+		$('#datetimepicker2').datetimepicker({
+			format: 'yyyy-mm-dd hh:ii',
+		});
+		$('#datetimepicker1').datetimepicker({
+			format: 'yyyy-mm-dd hh:ii',
+		});
+		document.addEventListener('plusready',function(){
+			
+			plus.key.addEventListener('backbutton',function(){
+				plus.nativeUI.confirm("exit?",function(event){
+					if(event.index){
+						plus.runtime.quit();
+					}
+				},null,['ok','no']);
+			},false);
+		})
+//		setTimeout(function() {
+//			plus.key.addEventListener('backbutton', function() {
+//				//			plus.nativeUI.toast("触发返回按钮");
+//				var temp = '<div class="alert alert-warning">' +
+//					'<a href="#" class="close" data-dismiss="alert">' +
+//					'&times;' +
+//					'</a>' +
+//					'<strong>警告！</strong>物理返回按键无效。' +
+//					'</div>'
+//				$("._error").append(temp);
+//			});
+//		}, 100);
 	</script>
 	<script src="js/easypiechart.js"></script>
 	<script src="js/easypiechart-data.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
 
 </html>

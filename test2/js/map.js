@@ -140,16 +140,26 @@ $(document).ready(function() {
 //	});
 
 	var flag = false;
-	$("#map_hideshow").click(function() {
+//	$("#map_hideshow").click(function() {
+//			if(!flag) {
+//				$("#datashow").css("display", "none");
+//				$("#stepshow").css("display", "none");
+//				$('#map_show_hide').css("display", "block");
+//				flag = true;
+//			} else {
+//				$("#datashow").css("display", "block");
+//				$("#stepshow").css("display", "block");
+//				$('#map_show_hide').css("display", "none");
+//				flag = false;
+//			}
+//
+//		})
+	$("#choose_date").click(function() {
 			if(!flag) {
-				$("#datashow").css("display", "none");
-				$("#stepshow").css("display", "none");
-				$('#map_show_hide').css("display", "block");
+				$("#datepick1").css("display","block")
 				flag = true;
 			} else {
-				$("#datashow").css("display", "block");
-				$("#stepshow").css("display", "block");
-				$('#map_show_hide').css("display", "none");
+				$("#datepick1").css("display","none");
 				flag = false;
 			}
 
@@ -197,7 +207,6 @@ $(document).ready(function() {
 				window.location.href = "login.html";
 			}
 		});
-
 	});
 });
 //var map = new BMap.Map("allmap");
@@ -206,27 +215,71 @@ $(document).ready(function() {
 //map.addControl(new BMap.NavigationControl());  
 //map.addControl(new BMap.ScaleControl());  
 //map.addControl(new BMap.OverviewMapControl());
-var flag;
+var flag3;
+var flag2=false;
 function show_mapFlag(){
-	flag=setInterval(datashow,15000);
+	if (!flag2){
+		flag4=false;
+		$("#update_mapdata").text("停止更新");
+		$("#update_mapdata").attr("class","btn btn-info")
+		flag3=setInterval(datashow,15000);
+		flag2=true;
+	}else{
+		$("#update_mapdata").text("实时更新");
+		$("#update_mapdata").attr("class","btn btn-primary")
+		clearInterval(flag3);
+		flag2=false;
+	}
 }
-function stop_mapFlag(){
-	clearInterval(flag);
+var flag4=false;
+function btnshow(){
+	var _testTime1=$("#datestart").val();
+	var _testTime2=$("#dateend").val();
+	if (_testTime1 && _testTime2){
+		console.log(JSON.stringify(_testTime1),JSON.stringify(_testTime2))
+		var _tempTime1=new Date(_testTime1).getTime();
+		var _tempTime2=new Date(_testTime2).getTime();
+		flag4=true;
+		datashow(_tempTime1,_tempTime2);
+	}else{
+		var temp1 = '<div class="alert alert-warning">' +
+						'<a href="#" class="close" data-dismiss="alert">' +
+						'&times;' +
+						'</a>' +
+						'<strong>警告！</strong>请填写日期。' +
+						'</div>'
+		$("._error").append(temp1);
+		setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},2000);
+		}
 }
+//function stop_mapFlag(){
+//	clearInterval(flag3);
+//}
 var start_time;
 function select_time(){
 	
 }
 
-function datashow() {
+function datashow(_starttime,_endtime) {
 	var temp_data;
 	var _shoe_code = localStorage.getItem("shoe_code");
 	var _account=localStorage.getItem("name");
+	var _startTime=null;
+	var _endTime=null;
+	if (flag4){
+		_startTime=_starttime;
+		_endTime=_endtime;
+		console.log('----------',_startTime,_endTime);
+		flag2=true;
+		show_mapFlag();
+	}
 	$.ajax({
 		url: "http://demaciaspower.cn/select_map_info",
 		data: {
 			shoe_code:_shoe_code,
-			account:_account
+			account:_account,
+			startTime:_startTime,
+			endTime:_endTime
 		},
 		type: "GET",
 		dataType: "json",
@@ -241,13 +294,16 @@ function datashow() {
 					var conv = new BMap.Convertor();
 					conv.translate(pointA, 1, 5, tranCallback);
 				} else {
+					flag2=true;
+					show_mapFlag();
 					var temp = '<div class="alert alert-warning">' +
 						'<a href="#" class="close" data-dismiss="alert">' +
 						'&times;' +
 						'</a>' +
-						'<strong>警告！</strong>地图数据无法获取。' +
+						'<strong>警告！</strong>没有地图数据。' +
 						'</div>'
 					$("._error").append(temp);
+					setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},2000);
 				}
 
 			}
@@ -287,9 +343,19 @@ function Distance(lat1, lon1, lat2, lon2) {
 	var distance = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(h));
 	return distance;
 }
+var clickflag=true;
+function clickfunc(){
+	if (clickflag){
+		$("#datashow").css("display","none");
+		$("#allmap").css("height","450px");
+		clickflag=false;
+	}else{
+		$("#datashow").css("display","block");
+		$("#allmap").css("height","300px");
+		clickflag=true;
+	}
+}
 
-//setInterval(datashow,45000);
-clearInterval();
 function mapshow(first_point, temp_data) {
 	var map = new BMap.Map("allmap");
 	map.enableScrollWheelZoom(true);
@@ -297,6 +363,7 @@ function mapshow(first_point, temp_data) {
 	map.addControl(new BMap.NavigationControl());
 	map.addControl(new BMap.ScaleControl());
 	map.addControl(new BMap.OverviewMapControl());
+	map.addEventListener("click", clickfunc);
 	var map_data = [];
 	var Dis = 0;
 	var time = temp_data[1].create_time - temp_data[0].create_time
@@ -324,14 +391,18 @@ function mapshow(first_point, temp_data) {
 		$('#red').text(Speed.toFixed(2));
 		$('#blue').text(Dis.toFixed(2));
 		$('#teal').text(time2.toFixed(2));
-		$('#grey').text((Calorie*250).toFixed(2));
+		$('#grey').text((Calorie/4).toFixed(2));
 		$('#easypiechart-teal').data('easyPieChart').update(time2);
 		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2));
 		$('#easypiechart-grey').data('easyPieChart').update((Calorie*250).toFixed(2));
 		translateCallback = function(data) {
 			if(data.status === 0) {
+				var color=['#33ffff','#33ffcc','#33ff99','#33ff66','#33ff33','#33ff00','#33cc00','#33cc33','#339900','#006400']
+				var _dis=Distance(data.points[0].lng,data.points[0].lat,data.points[8].lng,data.points[8].lat);
+				var speed=_dis*5;
+				var j=JSON.stringify(1/speed).substring(2,3);
 				var polyline = new BMap.Polyline(data.points, {
-					strokeColor: "red",
+					strokeColor: color[10-j],
 					strokeWeight: 3,
 					strokeOpacity: 1
 				});
