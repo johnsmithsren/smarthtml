@@ -1,6 +1,17 @@
 /**
  * Created by renjm on 17/2/17.
  */
+document.addEventListener('plusready',function(){
+			plus.key.addEventListener('backbutton',function(){
+				plus.nativeUI.confirm("exit?",function(event){
+					if(event.index){
+						plus.runtime.quit();
+					}
+				},null,['ok','no']);
+			},false);
+		})
+
+
 
 $('#signin').click(function() {
 	$(".error").remove();
@@ -60,10 +71,9 @@ $('#signin').click(function() {
 							'</div>'
 						$("._error").append(temp);
 						setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},3000);
-//						$("#password").val('');
-//						$("#username").val('');
 					} else {
 						console.log(data_back);
+						localStorage.setItem("token",data.token);
 						localStorage.setItem("name",_username);
 						console.log(data_back.msg);
 						localStorage.setItem("shoe_code",data_back.msg)
@@ -80,11 +90,27 @@ $('#signin').click(function() {
 		});
 	}
 });
-
+function Countdown(sec)  
+{  $('#code_time').css("display","block")
+    var i = window.setInterval(function()  
+    {  
+    $('#code_time').text(sec);
+    sec--;  
+    if(sec==0)  
+    {  
+    		 $('#code_time').text(sec);
+    		 $('#code_time').css("display","none")
+    		 $('#send_code').removeAttr('disabled');
+         clearInterval(i);  
+    }  
+    }, 1000);  
+}   
 $('#send_code').click(function() {
 	var _name = $("#tel").val();
 	var _account=$("#email").val();
 	if(_name.length == 11) {
+		Countdown(60);
+		$('#send_code').attr('disabled','disabled');
 		$.ajax({
 			url: "http://demaciaspower.cn/user/send_code",
 			data: {
@@ -94,6 +120,7 @@ $('#send_code').click(function() {
 			type: "POST",
 			dataType: "json",
 			success: function(data) {
+//				addClass('disabled')
 				if(data) {
 
 				} else {

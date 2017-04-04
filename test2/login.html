@@ -27,12 +27,13 @@
 							</div>
 							<div class="form-group">
 								验证码<input class="form-control" id='identify_code' placeholder="验证码:" name="code" type="text" value="">
+									<button style="display: none;" id='code_time'>60</button>
 							</div>
 							<div class="form-group">	
 								手机号<input class="form-control" id='tel' placeholder="手机号:" name="code" type="text" value="">
 							</div>
 							<div class="form-group">	
-								<button type="button" id="send_code" class="btn btn-primary">验证码</button>
+								<button type="button" id="send_code" class="btn btn-default">验证码</button>
 							</div>
 							<a id='signin' class="btn btn-primary">登录</a>
 							<a href="signup.html" class="btn btn-primary">注册</a>
@@ -72,6 +73,16 @@
 		})
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+		document.addEventListener('plusready',function(){
+			console.log('plusis ready############');
+			plus.key.addEventListener('backbutton',function(){
+				plus.nativeUI.confirm("是否退出应用?",function(event){
+					if(event.index){
+						plus.runtime.quit();
+					}
+				},null,['NO','YES']);
+			},false);
 		})
 	</script>	
 </body>

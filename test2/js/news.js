@@ -10,6 +10,9 @@ $(document).ready(function(){
 		dataType: "json",
 		success: function(data) {
 			if(data) {
+				if (data.data=="relogin"){
+					window.location.href = "login.html";
+				}
 				var temp = localStorage.getItem("name");
 				console.log(temp,data.data)
 				if(temp) {

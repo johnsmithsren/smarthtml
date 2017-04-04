@@ -79,7 +79,6 @@ $(document).ready(function() {
 	$.ajax({
 		url: "http://demaciaspower.cn/user_account",
 		data: {
-
 		},
 		type: "GET",
 		dataType: "json",

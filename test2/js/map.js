@@ -168,9 +168,7 @@ $(document).ready(function() {
 		//	$('#easypiechart-red').data('easyPieChart').update(50)
 	var temp_name =localStorage.getItem("name");
 	$.ajax({
-		
 		url: "http://demaciaspower.cn/get_userInfo",
-		//		      url: "http://localhost:3000/get_userInfo",
 		data: {
 			name: temp_name
 		},
@@ -178,6 +176,9 @@ $(document).ready(function() {
 		dataType: "json",
 		success: function(data) {
 			if(data) {
+				if (data.data=="relogin"){
+					window.location.href = "login.html";
+				}
 				var temp = localStorage.getItem("name");
 				console.log(temp, data.data)
 				if(temp) {
@@ -296,6 +297,7 @@ function datashow(_starttime,_endtime) {
 				} else {
 					flag2=true;
 					show_mapFlag();
+					tempmapshow();
 					var temp = '<div class="alert alert-warning">' +
 						'<a href="#" class="close" data-dismiss="alert">' +
 						'&times;' +
@@ -322,7 +324,7 @@ function theLocation() {
 }
 
 function calorie(weight, distance) {
-	return weight * distance * 1.4
+	return weight *distance* 1.036
 }
 
 function HaverSin(theta) {
@@ -331,7 +333,6 @@ function HaverSin(theta) {
 }
 
 function Distance(lat1, lon1, lat2, lon2) {
-	
 	var EARTH_RADIUS = 6378.137;
 	lat1 = lat1 * Math.PI / 180;
 	lon1 = lon1 * Math.PI / 180;
@@ -348,14 +349,24 @@ function clickfunc(){
 	if (clickflag){
 		$("#datashow").css("display","none");
 		$("#allmap").css("height","450px");
+		$("#show_data").click();
 		clickflag=false;
 	}else{
 		$("#datashow").css("display","block");
 		$("#allmap").css("height","300px");
+		$("#show_data").click();
 		clickflag=true;
 	}
 }
-
+function tempmapshow(){
+	var map = new BMap.Map("allmap");
+	map.enableScrollWheelZoom(true);
+	map.centerAndZoom(new BMap.Point(121.47,31.23), 13);
+	map.setCurrentCity("上海");
+	map.addControl(new BMap.NavigationControl());
+	map.addControl(new BMap.ScaleControl());
+	map.addControl(new BMap.OverviewMapControl());
+}
 function mapshow(first_point, temp_data) {
 	var map = new BMap.Map("allmap");
 	map.enableScrollWheelZoom(true);
@@ -391,7 +402,7 @@ function mapshow(first_point, temp_data) {
 		$('#red').text(Speed.toFixed(2));
 		$('#blue').text(Dis.toFixed(2));
 		$('#teal').text(time2.toFixed(2));
-		$('#grey').text((Calorie/4).toFixed(2));
+		$('#grey').text((Calorie).toFixed(2));
 		$('#easypiechart-teal').data('easyPieChart').update(time2);
 		$('#easypiechart-blue').data('easyPieChart').update(Dis.toFixed(2));
 		$('#easypiechart-grey').data('easyPieChart').update((Calorie*250).toFixed(2));

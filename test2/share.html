@@ -1,18 +1,20 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forms</title>
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/datepicker3.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Forms</title>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/datepicker3.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
 
-</head>
-<div class="error"></div>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	</head>
+	<div class="error"></div>
+
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
@@ -27,9 +29,12 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="user_name" class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="profile.html"><span class="glyphicon glyphicon-user"></span> Profile</a>
+									<a href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>控制台</a>
 								</li>
 								<li>
+									<a href="profile.html"><span class="glyphicon glyphicon-user"></span> Profile</a>
+								</li>
+								<li class="active">
 									<a href="share.html"><span class="glyphicon glyphicon-cog"></span> Share</a>
 								</li>
 								<li>
@@ -41,45 +46,75 @@
 				</div>
 			</div>
 		</nav>
-	
-	<div class="row">
-		<div class="col-xs-6 col-xs-offset-3  col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-2">
-			<img id='qrcode'src="http://demaciaspower.cn/getcode">
+		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+			<ul class="nav menu">
+				<li>
+					<a href="dashboard.html"><span class="glyphicon glyphicon-cog"></span>控制台</a>
+				</li>
+				<li class="active">
+					<a href="share.html"><span class="glyphicon glyphicon-stats"></span>分享</a>
+				</li>
+				<li role="presentation" class="divider"></li>
+			</ul>
 		</div>
-	</div>
-	<!--<form action="http://123.206.177.110/upload" enctype="multipart/form-data" method="post">
+		<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+			<div class="row">
+				<ol class="breadcrumb">
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-home"></span></a>
+					</li>
+					<li class="active">分享</li>
+				</ol>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<!--<img id='qrcode' src="http://demaciaspower.cn/getcode">-->
+				</div>
+
+				<div class="col-md-6">
+					<img id='qrcode' class="center-block">
+				</div>
+			</div>
+		</div>
+		<!--<form action="http://123.206.177.110/upload" enctype="multipart/form-data" method="post">
     <input type="text" name="title"><br>
     <input type="file" name="upload" multiple="multiple"><br>
     <input type="submit" value="Upload">
     </form>-->
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/chart.min.js"></script>
-	<script src="js/chart-data.js"></script>
-	<script src="js/easypiechart.js"></script>
-	<script src="js/easypiechart-data.js"></script>
-	<script src="js/profile.js"></script>
-	<!--<script src="/try/bootstrap/twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>-->
-	<!--
+
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/chart.min.js"></script>
+		<script src="js/chart-data.js"></script>
+		<script src="js/easypiechart.js"></script>
+		<script src="js/easypiechart-data.js"></script>
+		<script src="js/profile.js"></script>
+		<script>
+			var name = localStorage.getItem('name');
+			var _shoe_code = localStorage.getItem('shoe_code');
+			$('#qrcode').attr('src', "http://demaciaspower.cn/getcode" + "?shoe_code=" + _shoe_code);
+		</script>
+		<!--<script src="/try/bootstrap/twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>-->
+		<!--
     	作者：renjm@jiagouyun.com
     	时间：2017-03-03
     	描述：
     <script src="js/bootstrap-datepicker.js"></script>-->
-	<script>
-		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
-				$(this).find('em:first').toggleClass("glyphicon-minus");	  
-			}); 
-			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-		}(window.jQuery);
+		<script>
+			! function($) {
+				$(document).on("click", "ul.nav li.parent > a > span.icon", function() {
+					$(this).find('em:first').toggleClass("glyphicon-minus");
+				});
+				$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+			}(window.jQuery);
 
-		$(window).on('resize', function () {
-		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		})
-		$(window).on('resize', function () {
-		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		})
-	</script>	
-</body>
+			$(window).on('resize', function() {
+				if($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+			})
+			$(window).on('resize', function() {
+				if($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+			})
+		</script>
+	</body>
 
 </html>
