@@ -1,4 +1,20 @@
 $(document).ready(function(){
+	$.ajax({
+            url: "http://demaciaspower.cn/get_news",
+            data: {
+                
+            },
+            type: "POST",
+            dataType : "json",
+            success:function(data){
+                if(data){
+//              	   var temp_time=new Date(data.data[0].create_time * 1000).toLocaleString();
+             	   var temp_news=data.data[0].title;
+                  
+                   $("#marquee").text(temp_news);
+                }
+            }
+        });
 	var _name=localStorage.getItem("name");
 	$.ajax({
 		url: "http://demaciaspower.cn/get_userInfo",

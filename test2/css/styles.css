@@ -12,12 +12,25 @@ p {
 	color: #777;
 }
 
+#bg1{
+	background-image: url(../img/sport.jpg);
+}
+#bg2{
+	background-image: url(../img/sport1.jpg);
+}
+#bg3{
+	background-image: url(../img/sport2.jpg);
+}
+#bg4{
+	background-image: url(../img/pic2.jpg);
+}
+
 a, a:hover, a:focus {
-	color: #30a5ff;
+	color: #455ce4;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #5f6468;
+	color: #d1e2ef;
 }
 
 h1 {
@@ -42,7 +55,7 @@ h3, h4 {
 	color: #9fadbb;
 }
 
-.color-gray { color: #5f6468; }
+.color-gray { color: #FFFFFF; }
 .color-blue { color: #30a5ff; }
 .color-teal { color: #1ebfae; }
 .color-orange { color: #ffb53e; }
@@ -155,7 +168,7 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-	background-color: #30a5ff;
+	background-color: #5b90f5;
 	border-color: #30a5ff;
 }
 
@@ -299,7 +312,9 @@ a.bg-danger:hover {
 }
 
 .panel-default .panel-heading {
+	/*background-image: url(../img/sport3.jpg);*/
 	background: #fff;
+	overflow: hidden;
 	border-bottom: 1px solid #eee;
 	color: #5f6468;
 }
@@ -566,7 +581,7 @@ a.bg-danger:hover {
 .sidebar ul.nav .active > a:hover, .sidebar ul.nav li.parent a.active:hover,
 .sidebar ul.nav .active > a:focus, .sidebar ul.nav li.parent a.active:focus {
 	color: #fff;
-	background-color: #30a5ff;
+	background-color: #4facf5;
 }
 #allmap{
   /*width:100%;*/
@@ -636,7 +651,7 @@ a.bg-danger:hover {
 .breadcrumb {
 	border-radius: 0;
 	padding: 10px 15px;
-	background: #e9ecf2;
+	background: #d6e0f3;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 	margin: 0 ;
 }
@@ -683,8 +698,8 @@ h1.page-header {
 }
 
 #easypiechart-blue .percent { color: #30a5ff;}
-#easypiechart-teal .percent { color: #1ebfae;}
-#easypiechart-orange .percent { color: #ffb53e;}
+#easypiechart-teal .percent { color: #FFFFFF;}
+#easypiechart-grey .percent { color: #FFFFFF;}
 #easypiechart-red .percent { color: #ef4040;}
 
 /*Calendar Widget*/
