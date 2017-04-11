@@ -14,15 +14,33 @@ p {
 
 #bg1{
 	background-image: url(../img/sport.jpg);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
 }
 #bg2{
 	background-image: url(../img/sport1.jpg);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
 }
 #bg3{
 	background-image: url(../img/sport2.jpg);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
 }
 #bg4{
 	background-image: url(../img/pic2.jpg);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
+}
+#bg5{
+	background-image: url(../img/sport4.jpg);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
+}
+#bg6{
+	background-image: url(../img/sport5.png);
+	background-size:100% 100% ;
+	background-repeat: no-repeat;
 }
 
 a, a:hover, a:focus {
@@ -697,11 +715,16 @@ h1.page-header {
 	width: 120px;
 }
 
+
+#yellow{
+	font-size: 18px;
+}
 #easypiechart-blue .percent { color: #30a5ff;}
 #easypiechart-teal .percent { color: #FFFFFF;}
 #easypiechart-grey .percent { color: #FFFFFF;}
 #easypiechart-red .percent { color: #ef4040;}
-
+#easypiechart-green .percent { color:#FFFFFF;}
+#easypiechart-yellow .percent { color: #130606;}
 /*Calendar Widget*/
 
 #calendar, .datepicker-inline {

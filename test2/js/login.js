@@ -1,18 +1,15 @@
 /**
  * Created by renjm on 17/2/17.
  */
-document.addEventListener('plusready',function(){
-			plus.key.addEventListener('backbutton',function(){
-				plus.nativeUI.confirm("exit?",function(event){
-					if(event.index){
-						plus.runtime.quit();
-					}
-				},null,['ok','no']);
-			},false);
-		})
-
-
-
+$(document).ready(function() {
+	var shoecode=localStorage.getItem('shoe_code') || '';
+	var name=localStorage.getItem('name') || '';
+	if(shoecode.length){
+		if (name.length){
+			location.href='dashboard.html';
+		}
+	}
+});
 $('#signin').click(function() {
 	$(".error").remove();
 	if($("#email").val() == "") {

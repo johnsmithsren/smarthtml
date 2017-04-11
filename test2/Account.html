@@ -171,11 +171,12 @@
 		document.addEventListener('plusready',function(){
 			console.log('plusis ready############');
 			plus.key.addEventListener('backbutton',function(){
-				plus.nativeUI.confirm("是否退出应用?",function(event){
-					if(event.index){
-						plus.runtime.quit();
-					}
-				},null,['NO','YES']);
+				history.back();
+//				plus.nativeUI.confirm("是否退出应用?",function(event){
+//					if(event.index){
+//						plus.runtime.quit();
+//					}
+//				},null,['NO','YES']);
 			},false);
 		})
 	</script>

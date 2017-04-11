@@ -102,6 +102,30 @@
 //});
 
 $(document).ready(function() {
+	var weathre_data=localStorage.getItem('weather') || '';
+	
+	var _location="上海"
+	if (weathre_data.length){
+		console.log('#######',JSON.parse(weathre_data));
+		console.log('#######',JSON.parse(weathre_data).weather_data[0].date);
+		$("#yellow").text(JSON.parse(weathre_data).weather_data[0].temperature+JSON.parse(weathre_data).weather_data[0].weather+" PM2.5: "+JSON.parse(weathre_data).pm25)
+//		$('#easypiechart-yell').data('easyPieChart').update((Calorie*250).toFixed(2));
+	}else{
+		$.ajax({
+            url: "http://api.map.baidu.com/telematics/v3/weather",
+            data: {
+                location:_location,
+                output:"json",
+                ak:"0169ec6b8279bb83d8cee6b827ecc428"
+            },
+            type: "GET",
+            dataType: 'jsonp',
+            success:function(data){
+                console.log(data.results[0]);
+                localStorage.setItem('weather',JSON.stringify(data.results[0]))
+            }
+        });
+	}
 	var date = new Date();
 	var today = date.getDate();
 	var month = date.getMonth();
