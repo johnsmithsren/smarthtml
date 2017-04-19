@@ -9,7 +9,9 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/datepicker3.css" rel="stylesheet">
 		<link href="css/styles.css" rel="stylesheet">
-
+		
+		<script src="http://v2.jiathis.com/code/jiathis_r.js?move=0"></script>
+		
 	</head>
 	<div class="error"></div>
 
@@ -77,11 +79,28 @@
 				</div>
 			</div>
 		</div>
-		<!--<form action="http://123.206.177.110/upload" enctype="multipart/form-data" method="post">
-    <input type="text" name="title"><br>
-    <input type="file" name="upload" multiple="multiple"><br>
-    <input type="submit" value="Upload">
-    </form>-->
+
+		<!--<script "text/javascript">
+			var jiathis_config = {
+				url: ''
+				pic: "http://demaciaspower.cn/getcode?shoe_code=f00a"
+			}
+		</script>-->
+		<!-- JiaThis Button BEGIN -->
+		<div class="jiathis_style_32x32">
+			<a class="jiathis_button_qzone"></a>
+			<a class="jiathis_button_tsina"></a>
+			<a class="jiathis_button_tqq"></a>
+			<a class="jiathis_button_weixin"></a>
+		</div>
+		<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+		<!-- JiaThis Button END -->
+		<!-- JiaThis Button END -->
+		<!--<form action="http://localhost:3000/upload" enctype="multipart/form-data" method="post">
+			<input type="text" name="title"><br>
+			<input type="file" name="file" multiple="multiple"><br>
+			<input type="submit" value="Upload">
+		</form>-->
 
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/chart.min.js"></script>
@@ -90,9 +109,21 @@
 		<script src="js/easypiechart-data.js"></script>
 		<script src="js/profile.js"></script>
 		<script>
+		    var _time=Math.round(new Date().getTime()/1000) - 43200;
+		    var _end=Math.round(new Date().getTime()/1000);
 			var name = localStorage.getItem('name');
-			var _shoe_code = localStorage.getItem('shoe_code');
-			$('#qrcode').attr('src', "http://demaciaspower.cn/getcode" + "?shoe_code=" + _shoe_code);
+			var _shoe_code = localStorage.getItem('shoe_code') || "f000a";
+			var _starttime=localStorage.getItem("starttime") || _time;
+			var _endtime=localStorage.getItem("endtime") || _end;
+			var _account=localStorage.getItem("name");
+			$('#qrcode').attr('src', "http://demaciaspower.cn/getcode?shoe_code=" + _shoe_code +"&starttime="+_starttime+"&endtime="+_endtime+"&account="+_account);
+			var jiathis_config = {
+				imageUrl:"http://demaciaspower.cn/user/get_img?imgname=shoe.png",
+				title:'运动分享',
+				summary:'运动自由，分享无限',
+				url: "http://demaciaspower.cn/getmess?shoe_code=" + _shoe_code +"&starttime="+_starttime+"&endtime="+_endtime+"&account="+_account ,
+				pic: "http://demaciaspower.cn/getcode?shoe_code=" + _shoe_code +"&starttime="+_starttime+"&endtime="+_endtime+"&account="+_account
+			}
 		</script>
 		<!--<script src="/try/bootstrap/twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>-->
 		<!--
@@ -115,17 +146,15 @@
 				if($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 			})
 		</script>
-		<script>document.addEventListener('plusready', function() {
-	console.log('plusis ready############');
-	plus.key.addEventListener('backbutton', function() {
-		history.back();
-		//				plus.nativeUI.confirm("是否退出应用?",function(event){
-		//					if(event.index){
-		//						plus.runtime.quit();
-		//					}
-		//				},null,['NO','YES']);
-	}, false);
-})</script>
+
+		<script>
+			document.addEventListener('plusready', function() {
+				console.log('plusis ready############');
+				plus.key.addEventListener('backbutton', function() {
+					history.back();
+				}, false);
+			})
+		</script>
 	</body>
-	
+
 </html>

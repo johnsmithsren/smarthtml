@@ -14,6 +14,7 @@
 		<script src="js/chart.min.js"></script>
 		<script src="js/chart-data.js"></script>
 		<script src="js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/html2canvas.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" />
 		<script>
 			! function($) {
@@ -178,41 +179,37 @@
 		</div>
 
 		<!--/.main-->
-		
-		
-		
 
 	</body>
 	<script type="text/javascript">
-	
 		$('#datetimepicker2').datetimepicker({
 			format: 'yyyy-mm-dd hh:ii',
 		});
 		$('#datetimepicker1').datetimepicker({
 			format: 'yyyy-mm-dd hh:ii',
 		});
-		document.addEventListener('plusready',function(){
-			console.log('plusis ready############');
-			plus.key.addEventListener('backbutton',function(){
-				plus.nativeUI.confirm("是否退出应用?",function(event){
-					if(event.index){
-						plus.runtime.quit();
-					}
-				},null,['NO','YES']);
-			},false);
-		})
-//		setTimeout(function() {
-//			plus.key.addEventListener('backbutton', function() {
-//				//			plus.nativeUI.toast("触发返回按钮");
-//				var temp = '<div class="alert alert-warning">' +
-//					'<a href="#" class="close" data-dismiss="alert">' +
-//					'&times;' +
-//					'</a>' +
-//					'<strong>警告！</strong>物理返回按键无效。' +
-//					'</div>'
-//				$("._error").append(temp);
-//			});
-//		}, 100);
+		document.addEventListener('plusready', function() {
+				console.log('plusis ready############');
+				plus.key.addEventListener('backbutton', function() {
+					plus.nativeUI.confirm("是否退出应用?", function(event) {
+						if(event.index) {
+							plus.runtime.quit();
+						}
+					}, null, ['NO', 'YES']);
+				}, false);
+			})
+			//		setTimeout(function() {
+			//			plus.key.addEventListener('backbutton', function() {
+			//				//			plus.nativeUI.toast("触发返回按钮");
+			//				var temp = '<div class="alert alert-warning">' +
+			//					'<a href="#" class="close" data-dismiss="alert">' +
+			//					'&times;' +
+			//					'</a>' +
+			//					'<strong>警告！</strong>物理返回按键无效。' +
+			//					'</div>'
+			//				$("._error").append(temp);
+			//			});
+			//		}, 100);
 	</script>
 	<script src="js/easypiechart.js"></script>
 	<script src="js/easypiechart-data.js"></script>

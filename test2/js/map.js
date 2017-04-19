@@ -217,6 +217,7 @@ $(document).ready(function() {
 		success: function(data) {
 			if(data) {
 				if (data.data=="relogin"){
+					localStorage.clear();
 					window.location.href = "login.html";
 				}
 				var temp = localStorage.getItem("name");
@@ -275,7 +276,11 @@ function show_mapFlag(){
 var flag4=false;
 function btnshow(){
 	var _testTime1=$("#datestart").val();
+	_testTime1=new Date(_testTime1).getTime();
+	localStorage.setItem("starttime",_testTime1);
 	var _testTime2=$("#dateend").val();
+	_testTime2=new Date(_testTime2).getTime();
+	localStorage.setItem("endtime",_testTime2);
 	if (_testTime1 && _testTime2){
 		console.log(JSON.stringify(_testTime1),JSON.stringify(_testTime2))
 		var _tempTime1=new Date(_testTime1).getTime();
