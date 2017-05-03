@@ -2731,7 +2731,7 @@ select[multiple].input-lg {
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
-  -webkit-user-select: none;
+  -webkit-user-select: auto;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;

@@ -275,12 +275,19 @@ function show_mapFlag(){
 }
 var flag4=false;
 function btnshow(){
-	var _testTime1=$("#datestart").val();
+	var _testTime1=document.getElementById("datestart").value;
+//	_testTime1=new Date(_testTime1).getTime();
+	_testTime1=_testTime1.replace(/\-/g,'/');
 	_testTime1=new Date(_testTime1).getTime();
 	localStorage.setItem("starttime",_testTime1);
-	var _testTime2=$("#dateend").val();
+	var test=localStorage.getItem('starttime');
+	var _testTime2=document.getElementById("dateend").value;
+	_testTime2=_testTime2.replace(/\-/g,'/');
+//	_testTime2=new Date(_testTime2).getTime();
 	_testTime2=new Date(_testTime2).getTime();
 	localStorage.setItem("endtime",_testTime2);
+	var test2=localStorage.getItem('endtime');
+	console.log('@@@@@@@',test,test2);
 	if (_testTime1 && _testTime2){
 		console.log(JSON.stringify(_testTime1),JSON.stringify(_testTime2))
 		var _tempTime1=new Date(_testTime1).getTime();
@@ -307,6 +314,30 @@ function select_time(){
 }
 
 function datashow(_starttime,_endtime) {
+	var weathre_data=localStorage.getItem('weather') || '';
+	
+	var _location="上海"
+	if (weathre_data.length){
+		console.log('#######',JSON.parse(weathre_data));
+		console.log('#######',JSON.parse(weathre_data).weather_data[0].date);
+		$("#yellow").text(JSON.parse(weathre_data).weather_data[0].temperature+JSON.parse(weathre_data).weather_data[0].weather+" PM2.5: "+JSON.parse(weathre_data).pm25)
+//		$('#easypiechart-yell').data('easyPieChart').update((Calorie*250).toFixed(2));
+	}else{
+		$.ajax({
+            url: "http://api.map.baidu.com/telematics/v3/weather",
+            data: {
+                location:_location,
+                output:"json",
+                ak:"0169ec6b8279bb83d8cee6b827ecc428"
+            },
+            type: "GET",
+            dataType: 'jsonp',
+            success:function(data){
+                console.log(data.results[0]);
+                localStorage.setItem('weather',JSON.stringify(data.results[0]))
+            }
+        });
+	}
 	var temp_data;
 	var _shoe_code = localStorage.getItem("shoe_code");
 	var _account=localStorage.getItem("name");

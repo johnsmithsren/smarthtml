@@ -35,8 +35,19 @@
 							<div class="form-group">	
 								<button type="button" id="send_code" class="btn btn-default">验证码</button>
 							</div>
+							<div id='_acc' class="form-group" style="display: none;">	
+								授权者账号:<input class="form-control" id="_account" placeholder="授权者账号:" name="account" type="text" value="">
+								<!--<button type="button" id="_account" class="btn btn-default">授权者账号</button>-->
+							</div>
+							<div id="_sha" class="form-group" style="display: none;">	
+								授权账号:<input class="form-control" id="_shareaccount" placeholder="授权账号:" name="shareaccount" type="text" value="">
+								<!--<button type="button" id="_shareaccount" class="btn btn-default">授权账号</button>-->
+							</div>
 							<a id='signin' class="btn btn-primary">登录</a>
-							<a href="signup.html" class="btn btn-primary">注册</a>
+							<a id='sharesignin' style="display: none;" class="btn btn-primary">授权登录</a>
+							<a id='_sig' href="signup.html" class="btn btn-primary">注册</a>
+							<a id="_share" class="btn btn-primary">授权登录</a>
+							<a id="back" style="display: none;" class="btn btn-primary">返回</a>
 							<a id="forget" href="forgetpass.html" class="btn btn-primary">忘记密码</a>
 						</fieldset>
 					</form>
