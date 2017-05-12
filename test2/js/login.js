@@ -118,18 +118,18 @@ $('#signin').click(function() {
 			$('[data-dismiss=alert]').alert('close');
 		}, 3000);
 		return;
-	} else if($("#identify_code").val() == "") {
-		var temp = '<div class="alert alert-warning">' +
-			'<a href="#" class="close" data-dismiss="alert">' +
-			'&times;' +
-			'</a>' +
-			'<strong>警告！</strong>验证码不能为空。' +
-			'</div>'
-		$("._error").append(temp);
-		setTimeout(function() {
-			$('[data-dismiss=alert]').alert('close');
-		}, 3000);
-		return;
+//	} else if($("#identify_code").val() == "") {
+//		var temp = '<div class="alert alert-warning">' +
+//			'<a href="#" class="close" data-dismiss="alert">' +
+//			'&times;' +
+//			'</a>' +
+//			'<strong>警告！</strong>验证码不能为空。' +
+//			'</div>'
+//		$("._error").append(temp);
+//		setTimeout(function() {
+//			$('[data-dismiss=alert]').alert('close');
+//		}, 3000);
+//		return;
 	} else {
 		var _password = $("#password").val();
 		var _username = $("#email").val();
@@ -139,7 +139,7 @@ $('#signin').click(function() {
 			data: {
 				pwd: _password,
 				name: _username,
-				code: _code,
+//				code: _code,
 				account: _username
 			},
 			type: "POST",

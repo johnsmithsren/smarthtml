@@ -9,7 +9,14 @@ body {
 p {
 	color: #777;
 }
-
+#vol{
+	
+	color: #fff;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: 500;
+	letter-spacing: 2px;
+}
 #imgrotate {
 	margin:200px -600px;
 	position: absolute;
@@ -843,7 +850,7 @@ h1.page-header {
 }
 
 #easypiechart-yellow .percent {
-	color: #130606;
+	color: #f11212;
 }
 
 

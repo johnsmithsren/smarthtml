@@ -27,6 +27,52 @@ $(document).ready(function() {
 			}
 		}
 	});
+	var _shoe_code = localStorage.getItem("shoe_code");
+	var _account=localStorage.getItem("name");
+	var _startTime=Math.round(new Date().getTime() / 1000) - 86400;
+	var _endTime=Math.round(new Date().getTime() / 1000);
+	var temp_data=0;
+	var t_data=0;
+	$.ajax({
+		url: "http://demaciaspower.cn/select_map_info",
+		data: {
+			shoe_code:_shoe_code,
+			account:_account,
+			startTime:_startTime,
+			endTime:_endTime
+		},
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			if(data) {
+				
+				if(data.data.length) {
+					for(var i = 0; i < data.data.length - 1; i++) { 
+						if (isNaN(parseInt(data.data[i].step_number))){
+							t_data=0;
+						}else{
+							t_data=parseInt(data.data[i].step_number);
+						}
+						
+					 	temp_data=temp_data+Math.abs(t_data);
+					 	
+					}
+					temp_data=temp_data/3.0;
+					$('#stepnum').val(temp_data+"步数");
+				} else {
+					var temp = '<div class="alert alert-warning">' +
+						'<a href="#" class="close" data-dismiss="alert">' +
+						'&times;' +
+						'</a>' +
+						'<strong>警告！</strong>没有运动数据。' +
+						'</div>'
+					$("._error").append(temp);
+					setTimeout(function(){ $('[data-dismiss=alert]').alert('close');},2000);
+				}
+
+			}
+		}
+	});
 	var _name = localStorage.getItem("name");
 	$.ajax({
 		url: "http://demaciaspower.cn/get_userprofile",
@@ -36,18 +82,13 @@ $(document).ready(function() {
 		type: "GET",
 		dataType: "json",
 		success: function(data) {
-			if(data) {
-				//				for item in data.data[2]
-				//					
+			if(data) {				
 				$("#password").val(data.data[0].pwd);
 				$("#username").val(data.data[0].account);
 				$("#tel").val(data.data[0].tel);
 				$("#email").val(data.data[0].name);
 				$("#weight").val(data.data[0].weight);
 				$("#shoe_code").val(data.data[0].shoe_code);
-				$("#stepnum").val(data.data[1][5].step_number);
-				$('#calory').val('10000');
-				$('#alldis').val('2000');
 			} else {
 				console.log('ajax failed!')
 			}
@@ -67,16 +108,18 @@ $('#edit_user').click(function() {
 		url: "http://demaciaspower.cn/update_userprofile",
 		data: {
 			pwd: _password,
-			name: _username,
+			account: _username,
 			tel: _tel,
-			account: _email,
+			name: _email,
 			weight: _weight,
 			shoe_code: _shoecode
 		},
 		type: "POST",
 		dataType: "json",
 		success: function(data) {
-			console.log(data);
+			if (data.msg=="success"){
+				location.reload();
+			}
 		}
 	});
 
