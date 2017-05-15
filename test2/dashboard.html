@@ -86,6 +86,10 @@
 				<li>
 					<a id='user_logout'><span class="glyphicon glyphicon-log-out"></span> 登出</a>
 				</li>
+				
+				<li>
+					<a href="mapround.html"><span class="glyphicon glyphicon-record"></span> 监控报警范围</a>
+				</li>
 				<li>
 					<a href="shareaccount.html" id='shareaccount'><span class="glyphicon glyphicon-gift"></span> 授权</a>
 				</li>
@@ -111,7 +115,8 @@
 				<marquee id="marquee" class="glyphicon glyphicon-volume-up" behavior="scroll">今日更新</marquee>
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">实时更新</button>
+					<button id="update_data" onclick="show_mapbytime()" class="btn btn-primary">实时定位</button>
+					<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">计时运动</button>
 					<button id="choose_date" class="btn btn-primary">日期选择</button>
 					<button id="show_data" onclick="btnshow()" class="btn btn-primary">显示地图</button>
 					<div id="datepick1" style="display: none; " class="form-group">

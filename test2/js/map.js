@@ -166,6 +166,10 @@ $(document).ready(function() {
 					localStorage.clear();
 					window.location.href = "login.html";
 				}
+				var alertmap = data.data[0].mapinfo;
+				console.log('123123123',alertmap);
+				localStorage.setItem('alertmap',alertmap);
+				localStorage.setItem('redius',data.data[0].radius);
 				var temp = localStorage.getItem("name");
 				console.log(temp, data.data)
 				if(temp) {
@@ -204,7 +208,7 @@ var flagtostop=false;
 function show_mapFlag() {
 	Time1 = new Date().getTime();
 	Time1=Time1-35000;
-	if(flagtostop){
+	if(!flagtostop){
 		flag2 = true;
 		flagtostop=false;
 	}
@@ -223,6 +227,24 @@ function show_mapFlag() {
 		flag2 = false;
 	}
 	flagtostop=true;
+}
+var _flag2=true;
+function show_mapbytime() {
+	if(_flag2) {
+		flag2 = false;
+		$("#update_data").text("停止定位");
+		$("#update_data").attr("class", "btn btn-info");
+		datashowbytime();
+		_flag4 = setInterval(datashowbytime, 15000);
+		_flag2 = false;
+	} else {
+		$("#update_data").text("实时定位");
+		$("#update_data").attr("class", "btn btn-primary");
+		localStorage.removeItem('starttime');
+		clearInterval(_flag4);
+		_flag2=true;
+	}
+	
 }
 
 
@@ -258,8 +280,100 @@ function btnshow() {
 }
 var start_time;
 
-function select_time() {
+function datashowbytime() {
+	temp_startime = new Date().getTime()-35000;
+	temp_endtime = new Date().getTime();
+	var weathre_data = localStorage.getItem('weather') || '';
+	var _location = "上海"
+	if(weathre_data.length) {
+		$("#yellow").text(JSON.parse(weathre_data).weather_data[0].temperature + JSON.parse(weathre_data).weather_data[0].weather + " PM2.5: " + JSON.parse(weathre_data).pm25);
+	} else {
+		$.ajax({
+			url: "http://api.map.baidu.com/telematics/v3/weather",
+			data: {
+				location: _location,
+				output: "json",
+				ak: "0169ec6b8279bb83d8cee6b827ecc428"
+			},
+			type: "GET",
+			dataType: 'jsonp',
+			success: function(data) {
+				console.log(data.results[0]);
+				localStorage.setItem('weather', JSON.stringify(data.results[0]));
+				$("#yellow").text(JSON.parse(weathre_data).weather_data[0].temperature + JSON.parse(weathre_data).weather_data[0].weather + " PM2.5: " + JSON.parse(weathre_data).pm25);
+			}
+		});
+	}
+	var temp_data;
+	var _shoe_code = localStorage.getItem("shoe_code");
+	var _account = localStorage.getItem("name");
+	$.ajax({
+		url: "http://demaciaspower.cn/select_map_info",
+		data: {
+			shoe_code: _shoe_code,
+			account: _account,
+			startTime: temp_startime,
+			endTime: temp_endtime
+		},
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			if(data) {
+				if(data.data.length) {
+					var pointA = [];
+					pointA.push(new BMap.Point(data.data[0].latitude.toFixed(10), data.data[0].longitude.toFixed(10)));
+					tranCallback = function(result) {
+						mapshowbytime(result.points[0]);
+					}
+					var conv = new BMap.Convertor();
+					conv.translate(pointA, 1, 5, tranCallback);
+				} else {
+					flag2 = true;
+					show_mapFlag();
+					tempmapshow();
+					var temp = '<div class="alert alert-warning">' +
+						'<a href="#" class="close" data-dismiss="alert">' +
+						'&times;' +
+						'</a>' +
+						'<strong>警告！</strong>没有地图数据。' +
+						'</div>'
+					$("._error").append(temp);
+					setTimeout(function() {
+						$('[data-dismiss=alert]').alert('close');
+					}, 2000);
+				}
 
+			}
+		}
+	});
+}
+function sendmesstouser(){
+	document.addEventListener('plusready', function() {
+			console.log('plusis ready############');
+			void plus.push.createMessage( '用户超出警戒范围');
+			
+	})
+}
+var temp_log=true;
+function mapshowbytime(first_point, temp_data) {
+	var _test=localStorage.getItem('alertmap');
+	var _redius=localStorage.getItem('redius')
+	_test=JSON.parse(_test);
+	var _data=Distance(first_point.lat,first_point.lng,_test.lat,_test.lng);
+	if (_data>_redius){
+		if(temp_log){
+			sendmesstouser();
+			temp_log=false;
+		}
+		
+	}
+	var map = new BMap.Map("allmap");
+	map.enableScrollWheelZoom(true);
+	map.centerAndZoom(first_point, 20);
+	map.addControl(new BMap.NavigationControl());
+	map.addControl(new BMap.ScaleControl());
+	map.addControl(new BMap.OverviewMapControl());
+	map.addOverlay(new BMap.Marker(first_point));
 }
 
 function datashow(_starttime, _endtime) {
@@ -291,7 +405,8 @@ function datashow(_starttime, _endtime) {
 			dataType: 'jsonp',
 			success: function(data) {
 				console.log(data.results[0]);
-				localStorage.setItem('weather', JSON.stringify(data.results[0]))
+				localStorage.setItem('weather', JSON.stringify(data.results[0]));
+				$("#yellow").text(JSON.parse(data.results[0]).weather_data[0].temperature + JSON.parse(data.results[0]).weather_data[0].weather + " PM2.5: " + JSON.parse(data.results[0]).pm25);
 			}
 		});
 	}
@@ -415,6 +530,25 @@ function tempmapshow() {
 	map.addControl(new BMap.OverviewMapControl());
 }
 
+function showinfo() {
+	$.ajax({
+		url: "http://demaciaspower.cn/testshowinfo",
+		data: {
+			
+		},
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			if(data) {
+				
+				$('#testforbishe').val(data.data[0].latitude);
+			}
+		}
+	});
+}
+
+
+
 function mapshow(first_point, temp_data) {
 	var map = new BMap.Map("allmap");
 	map.enableScrollWheelZoom(true);
@@ -437,7 +571,7 @@ function mapshow(first_point, temp_data) {
 	if(temp_data.length) {
 		var time2 = (temp_data[temp_data.length - 1].create_time - temp_data[0].create_time) / 60
 		for(var i = 0; i < temp_data.length - 1; i++) {
-			var point1 = new BMap.Point((temp_data[i].latitude).toFixed(10), (temp_data[i].longitude + 0.0004866).toFixed(10));
+			var point1 = new BMap.Point((temp_data[i].latitude).toFixed(10), (temp_data[i].longitude + 0.00001888).toFixed(10));
 			map_data.push(point1);
 			var temp_Dis = Distance(temp_data[i].latitude, temp_data[i].longitude, temp_data[i + 1].latitude, temp_data[i + 1].longitude);
 			Dis = Dis + temp_Dis;
