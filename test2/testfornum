@@ -1,0 +1,64 @@
+/**
+ * Created by renjm on 17/6/17.
+ */
+_ = require('underscore');
+var data=[{a:1},{b:2},{c:3},{d:4}];
+var s=[5,6,7,9,10];
+var i,_i,j,_len;
+var _compute=0;
+var _temp=data;
+var _temp2=data;
+var _temp3=[];
+var key={};
+var _temp1=[];
+var _final=[];
+var _final2=[];
+for (j=0;j<data.length;++j){
+   _temp3.push(JSON.stringify(_temp));
+   for (i = _i = 0, _len = _temp.length; _i < _len; i = ++_i) {
+      _temp2=_.extend(_temp[i],data[j]);
+      _length= _.values(_temp2);
+      if(_length.length==(j+2)) {
+         _temp1.push(_temp2);
+      }
+   }
+   _temp=_temp1;
+   _temp1=[];
+}
+for(z=0;z<s.length;++z){
+   for(k=0;k<_temp3.length;++k){
+      _data=JSON.parse(_temp3[k]);
+      for(x=0;x<_data.length;++x){
+         var _value=_.values(_data[x]);
+         for(e=0;e<_value.length;++e) {
+            _compute = _compute + _value[e];
+         }
+         if(_compute==s[z]){
+            var _s=s[z];
+            key[_s]=JSON.stringify(_data[x]);
+            _final.push(key);
+            key={};
+         }
+         _compute=0;
+
+      }
+   }
+}
+console.log(_final)
+//var  _compute1=0;
+//for(_t=0;_t<_final.length;++_t){
+//   var _g=JSON.parse(_final[_t]);
+//   var _v=_.values(_g);
+//   console.log(_v);
+//   for(_k=0;_k<_v.length;++_k) {
+//      _compute1 = _compute1 + _v[_k];
+//   }
+//   console.log(_compute1);
+//   var _s=_compute1;
+//   key[_s]=JSON.stringify(_g);
+//   _final2.push(key);
+//   key={};
+//   _compute1=0;
+//
+//}
+//console.log(_final2);
