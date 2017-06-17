@@ -48,21 +48,6 @@
 						<li class="dropdown pull-right">
 							<div id='vol'></div>
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="user_name" class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
-							
-							<ul class="dropdown-menu" role="menu">
-								<!--<li>
-									<a href="profile.html"><span class="glyphicon glyphicon-user"></span> 个人信息</a>
-								</li>
-								<li>
-									<a href="share.html"><span class="glyphicon glyphicon-cog"></span> 分享</a>
-								</li>
-								<li>
-									<a id='user_logout'><span class="glyphicon glyphicon-log-out"></span> 登出</a>
-								</li>
-								<li>
-									<a href="shareaccount.html" id='shareaccount'><span class="glyphicon glyphicon-gift"></span> 授权</a>
-								</li>-->
-							</ul>
 						</li>
 					</ul>
 				</div>
@@ -84,50 +69,40 @@
 					<a href="share.html"><span class="glyphicon glyphicon-cog"></span> 分享</a>
 				</li>
 				<li>
-					<a id='user_logout'><span class="glyphicon glyphicon-log-out"></span> 登出</a>
+					<a href="historymap.html"><span class="glyphicon glyphicon-log-out"></span> 历史数据显示</a>
 				</li>
-				
+
 				<li>
 					<a href="mapround.html"><span class="glyphicon glyphicon-record"></span> 监控报警范围</a>
 				</li>
 				<li>
 					<a href="shareaccount.html" id='shareaccount'><span class="glyphicon glyphicon-gift"></span> 授权</a>
 				</li>
-				<!--<li>
-					<a href="task.html"><span class="glyphicon glyphicon-stats"></span> 任务</a>
-				</li>-->
-
+				<li>
+					<a id='user_logout'><span class="glyphicon glyphicon-log-out"></span> 登出</a>
+				</li>
 				<li role="presentation" class="divider"></li>
 			</ul>
 		</div>
 
 		<div class="col-sm-8 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-			<!--<div class="row">
-				<ol class="breadcrumb">
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-home"></span></a>
-					</li>
-					<li class="active">控制台</li>
-
-				</ol>
-			</div>-->
 			<div class="row">
 				<marquee id="marquee" class="glyphicon glyphicon-volume-up" behavior="scroll">今日更新</marquee>
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<button id="update_data" onclick="show_mapbytime()" class="btn btn-primary">实时定位</button>
-					<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">计时运动</button>
-					<button id="choose_date" class="btn btn-primary">日期选择</button>
-					<button id="show_data" onclick="btnshow()" class="btn btn-primary">显示地图</button>
+					<!--<button id="update_data" onclick="show_mapbytime()" class="btn btn-primary">实时定位</button>-->
+					<!--<button id="update_mapdata" onclick="show_mapFlag()" class="btn btn-primary">计时运动</button>-->
+					<button id="choose_date" style="display: none; " class="btn btn-primary">日期选择</button>
+					<button id="show_data" style="display: none; " onclick="btnshow()" class="btn btn-primary">显示地图</button>
 					<div id="datepick1" style="display: none; " class="form-group">
 						<div class='input-group date' id='datetimepicker2'>
-							<input type='text' id="datestart" class="form-control" />
+							<input type='text' readonly="readonly" id="datestart" class="form-control" />
 							<span class="input-group-addon">  
                     			<span class="glyphicon glyphicon-calendar"></span>
 							</span>
 						</div>
 						<div class='input-group date' id='datetimepicker1'>
-							<input type='text' id="dateend" class="form-control" />
+							<input type='text' readonly="readonly" id="dateend" class="form-control" />
 							<span class="input-group-addon">  
                     			<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -137,70 +112,11 @@
 			</div>
 			<div class="_error"></div>
 			<div class="row">
-				<!--<div class="col-xs-6 col-md-4">-->
+
 				<div class="col-md-12" id="map_show_hide" style="display: block;">
 					<div class="col-md-12" id="allmap"></div>
 				</div>
 			</div>
-			<div class="row" id='datashow'>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg1'>
-							<h4>距离(公里)</h4>
-							<div class="easypiechart" id="easypiechart-blue" data-percent=""><span class="percent" id="blue"></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg2'>
-							<h4>时间(分钟)</h4>
-							<div class="easypiechart" id="easypiechart-teal" data-percent=""><span class="percent" id='teal'></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg3'>
-							<h4>配速(米/秒)</h4>
-							<div class="easypiechart" id="easypiechart-red" data-percent=""><span class="percent" id='red'></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg4'>
-							<h4>卡路里(KCal)</h4>
-							<div class="easypiechart" id="easypiechart-grey" data-percent=""><span class="percent" id='grey'></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg5'>
-							<h4>天气</h4>
-							<div class="easypiechart" id="easypiechart-yellow" data-percent=""><span class="percent" id='yellow'></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-body easypiechart-panel" id='bg6'>
-							<h4>活跃度</h4>
-							<div class="easypiechart" id="easypiechart-green" data-percent=""><span class="percent" id='green'></span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!--/.main-->
 
 	</body>
 	<script type="text/javascript">
@@ -210,28 +126,37 @@
 		$('#datetimepicker1').datetimepicker({
 			format: 'yyyy-mm-dd hh:ii',
 		});
+		var count = 0;
 		document.addEventListener('plusready', function() {
-				console.log('plusis ready############');
-				plus.key.addEventListener('backbutton', function() {
-					plus.nativeUI.confirm("是否退出应用?", function(event) {
-						if(event.index) {
-							plus.runtime.quit();
-						}
-					}, null, ['NO', 'YES']);
-				}, false);
-			})
-			//		setTimeout(function() {
-			//			plus.key.addEventListener('backbutton', function() {
-			//				//			plus.nativeUI.toast("触发返回按钮");
-			//				var temp = '<div class="alert alert-warning">' +
-			//					'<a href="#" class="close" data-dismiss="alert">' +
-			//					'&times;' +
-			//					'</a>' +
-			//					'<strong>警告！</strong>物理返回按键无效。' +
-			//					'</div>'
-			//				$("._error").append(temp);
-			//			});
-			//		}, 100);
+			console.log('plusis ready############');
+
+			function checkdistance() {
+				var _tempnowdis = localStorage.getItem('disnow') || 0;
+				var _tempradius = parseInt(localStorage.getItem('redius')) || 0;
+				console.log('test');
+				console.log(_tempnowdis);
+				console.log(_tempradius);
+				if(_tempnowdis > _tempradius) {
+					if(count < 2) {
+						console.log('test');
+						void plus.push.createMessage('用户超出警戒范围');
+					} else {
+
+					}
+					count++;
+				} else {
+					count = 0;
+				}
+			}
+			setInterval(checkdistance, 15000);
+			plus.key.addEventListener('backbutton', function() {
+				plus.nativeUI.confirm("是否退出应用?", function(event) {
+					if(event.index) {
+						plus.runtime.quit();
+					}
+				}, null, ['NO', 'YES']);
+			}, false);
+		})
 	</script>
 	<script src="js/easypiechart.js"></script>
 	<script src="js/easypiechart-data.js"></script>

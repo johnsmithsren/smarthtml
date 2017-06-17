@@ -71,7 +71,7 @@ $('#sharesignin').click(function() {
 			success: function(data) {
 				console.log(data);
 				if(data.msg == "success") {
-					localStorage.setItem("name", data.data.name);
+					localStorage.setItem("name", data.data.account);
 					localStorage.setItem("shoe_code", data.data.shoe_code)
 					window.location.href = 'dashboard.html'
 				} else {

@@ -85,3 +85,19 @@ function send_mail(_title, _text, temp_data) {
 	});
 	$("#myemail").modal('hide');
 }
+$('#user_logout').click(function() {
+		var User_name = localStorage.getItem("name");
+		var data1 = $.ajax({
+			url: "http://demaciaspower.cn/dashboard/logout",
+			data: {
+				user_name: User_name
+			},
+			type: "POST",
+			dataType: "json",
+			success: function(data) {
+				localStorage.removeItem("name");
+				localStorage.clear();
+				window.location.href = "login.html";
+			}
+		});
+	});
